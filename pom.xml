@@ -15,6 +15,7 @@
 		<jenkins.version>2.7.3</jenkins.version>
 		<java.level>8</java.level>
 		<auto-circleci-plugin.version>1.2.1</auto-circleci-plugin.version>
+		<auto-circleci-plugin.local.path>${project.basedir}/src/repository/</auto-circleci-plugin.local.path>
 	</properties>
 	<name>NowSecure Auto Plugin</name>
 	<description>Send an Android or iOS applications to NowSecure Auto for Mobile Application Security Testing</description>
@@ -46,6 +47,7 @@
 									<overWrite>true</overWrite>
 								</artifactItem>
 							</artifactItems>
+							<localRepositoryDirectory>${auto-circleci-plugin.local.path}</localRepositoryDirectory>
 							<outputDirectory>${project.build.directory}/dist/lib</outputDirectory>
 							<stripVersion>true</stripVersion>
 						</configuration>
@@ -86,8 +88,6 @@
 			<groupId>com.nowsecure</groupId>
 			<artifactId>auto-circleci-plugin</artifactId>
 			<version>${auto-circleci-plugin.version}</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/auto-circleci-plugin-${auto-circleci-plugin.version}.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -163,6 +163,10 @@
 			<id>repo.jenkins-ci.org</id>
 			<url>https://repo.jenkins-ci.org/public/</url>
 		</repository>
+		<repository>
+			<id>circle-ci</id>
+			<url>file:///${auto-circleci-plugin.local.path}</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -170,8 +174,8 @@
 			<url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 		<pluginRepository>
-			<id>localrepo</id>
-			<url>file:///${env.HOME}/.m2/repository</url>
+			<id>circle-ci</id>
+			<url>file:///${auto-circleci-plugin.local.path}</url>
 		</pluginRepository>
 	</pluginRepositories>
 </project>
